@@ -1,0 +1,15 @@
+Helper to handle saving/fetching JSON to URL hash.
+
+Useful for presisting user settings in the URL's hash fragment.
+When the user refreshes the page, you can fetch those settings directly from the URL.
+
+Example:
+Hash.set({my_id:1, your_id:2}); // http://www.example.com#{my_id:1,your_id:2}
+Hash.get('my_id'); // Returns 1
+
+Limitation: String values cannot be stored - only numbers, arrays and objects.
+That's because double quotes are stripped when transmitted in emails.
+
+Author: Martin Drapeau
+Copyright: Planbox Inc. 2010
+Note: Requires json2.js (https://github.com/douglascrockford/JSON-js)
