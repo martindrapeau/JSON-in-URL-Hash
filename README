@@ -4,12 +4,13 @@ Useful for presisting user settings in the URL's hash fragment.
 When the user refreshes the page, you can fetch those settings directly from the URL.
 
 Example:
-Hash.set({my_id:1, your_id:2}); // http://www.example.com#{my_id:1,your_id:2}
+Hash.set({my_id:1, your_id:2, your_name:"John"}); // http://www.example.com#{my_id:1,your_id:2,your_name:John}
 Hash.get('my_id'); // Returns 1
 
-Limitation: String values cannot be stored - only numbers, arrays and objects.
-That's because double quotes are stripped when transmitted in emails.
+Notice that the JSON in the URL has no double quotes. This is because they
+get stripped when transmitted in emails. As such don't have spaces or funky
+characters in strings.
 
 Author: Martin Drapeau
-Copyright: Planbox Inc. 2010
+Copyright: Planbox Inc. 2011
 Note: Requires json2.js (https://github.com/douglascrockford/JSON-js)
