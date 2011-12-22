@@ -56,6 +56,7 @@ Hash = {
 		// Be nice - don't require double quotes!
 		hash = hash.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2":');
 		hash = hash.replace(/:(['"])?([a-zA-Z_]+[a-zA-Z0-9_]*)(['"])?/g, ':"$2"');
+		hash = hash.replace(/:(['"])?([0-9+][0-9]+[0-9]+[0-9]+-[0-9]+[0-9]?-[0-9]+[0-9]?)(['"])?/g, ':"$2"');
 		if (this.decode) hash = this.decode(hash);
 		var object = {};
 		try {object = JSON.parse(hash);} catch(err) {}
