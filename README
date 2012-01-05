@@ -12,5 +12,5 @@ get stripped when transmitted in emails. As such don't have spaces or funky
 characters in strings.
 
 Author: Martin Drapeau
-Copyright: Planbox Inc. 2011
+Copyright 2009-2012 Planbox Inc.
 Note: Requires json2.js (https://github.com/douglascrockford/JSON-js)
