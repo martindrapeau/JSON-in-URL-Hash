@@ -51,11 +51,14 @@ Hash = {
 	_getHashAsObject: function() {
 		var hash = document.location.hash.replace('#','');
 		// Replace escaped curly braces
-		hash = hash.replace('%7B', '{');
-		hash = hash.replace('%7D', '}');
-		// Be nice - don't require double quotes!
-		hash = hash.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2":');
-		hash = hash.replace(/:(['"])?([a-zA-Z0-9_\-]*[a-zA-Z_\-]+[a-zA-Z0-9_\-]*)(['"])?/g, ':"$2"');
+		hash = hash.replace(/%7B/g, '{');
+		hash = hash.replace(/%7D/g, '}');
+		hash = hash.replace(/%5B/g, '[');
+		hash = hash.replace(/%5D/g, ']');
+		// Introduce double quotes on non-numeric strings
+		hash = hash.replace(/(['"])?([a-zA-Z0-9_\-]+)(['"])?:/g, '"$2":');
+		hash = hash.replace(/(['"])?([a-zA-Z0-9_\-]*[a-zA-Z_\-]+[a-zA-Z0-9_\-]*)(['"])?/g, '"$2"');
+		hash = hash.replace(/,,/g, ',"",').replace(/\[,/g, '["",').replace(/,\]/g, ',""]');
 		if (this.decode) hash = this.decode(hash);
 		var object = {};
 		try {object = JSON.parse(hash);} catch(err) {}
