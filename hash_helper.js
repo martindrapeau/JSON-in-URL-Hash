@@ -50,19 +50,22 @@ Hash = {
 	// an empty object.
 	_getHashAsObject: function() {
 		var hash = document.location.hash.replace('#','');
-		// Replace escaped curly braces
+		hash = escape(hash);
+		// Replace escaped curly braces, square braquets, colons and commas
 		hash = hash.replace(/%7B/g, '{');
 		hash = hash.replace(/%7D/g, '}');
 		hash = hash.replace(/%5B/g, '[');
 		hash = hash.replace(/%5D/g, ']');
+		hash = hash.replace(/%3A/g, ':');
+		hash = hash.replace(/%2C/g, ',');
 		// Introduce double quotes on non-numeric strings
 		hash = hash.replace(/(['"])?([a-zA-Z0-9_\-]+)(['"])?:/g, '"$2":');
-		hash = hash.replace(/(['"])?([a-zA-Z0-9_\-]*[a-zA-Z_\-]+[a-zA-Z0-9_\-]*)(['"])?/g, '"$2"');
+		hash = hash.replace(/(['"])?([a-zA-Z0-9_\-%]*[a-zA-Z_\-]+[a-zA-Z0-9_\-%]*)(['"])?/g, '"$2"');
 		hash = hash.replace(/,,/g, ',"",').replace(/\[,/g, '["",').replace(/,\]/g, ',""]');
 		if (this.decode) hash = this.decode(hash);
 		var object = {};
-		try {object = JSON.parse(hash);} catch(err) {}
-		return object;
+		try {object = JSON.parse(hash);} catch(err) {};
+		return _unescape(object);
 	},
 	
 	// Returns the URL without the hash
@@ -83,3 +86,29 @@ Hash = {
 		return url+'#'+hash_string;
 	}
 };
+
+function _escape(object) {
+	if (typeof object == 'string') {
+		return object = escape(object);
+	} else if (typeof object == 'array') {
+		for (var key=0; key<object.length; key++)
+			object[key] = _escape(object[key]);
+	} else if (typeof object == 'object') {
+		for (var key in object)
+			object[key] = _escape(object[key]);
+	}
+	return object;
+}
+
+function _unescape(object) {
+	if (typeof object == 'string') {
+		return object = unescape(object);
+	} else if (typeof object == 'array') {
+		for (var key=0; key<object.length; key++)
+			object[key] = _unescape(object[key]);
+	} else if (typeof object == 'object') {
+		for (var key in object)
+			object[key] = _unescape(object[key]);
+	}
+	return object;
+}
