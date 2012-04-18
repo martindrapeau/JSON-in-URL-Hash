@@ -50,14 +50,7 @@ Hash = {
 	// an empty object.
 	_getHashAsObject: function() {
 		var hash = document.location.hash.replace('#','');
-		hash = escape(hash);
-		// Replace escaped curly braces, square braquets, colons and commas
-		hash = hash.replace(/%7B/g, '{');
-		hash = hash.replace(/%7D/g, '}');
-		hash = hash.replace(/%5B/g, '[');
-		hash = hash.replace(/%5D/g, ']');
-		hash = hash.replace(/%3A/g, ':');
-		hash = hash.replace(/%2C/g, ',');
+		hash = unescape(hash);
 		// Introduce double quotes on non-numeric strings
 		hash = hash.replace(/(['"])?([a-zA-Z0-9_\-]+)(['"])?:/g, '"$2":');
 		hash = hash.replace(/(['"])?([a-zA-Z0-9_\-%]*[a-zA-Z_\-]+[a-zA-Z0-9_\-%]*)(['"])?/g, '"$2"');
