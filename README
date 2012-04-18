@@ -8,8 +8,8 @@ Hash.set({my_id:1, your_id:2, your_name:"John"}); // http://www.example.com#{my_
 Hash.get('my_id'); // Returns 1
 
 Notice that the JSON in the URL has no double quotes. This is because they
-get stripped when transmitted in emails. As such don't have spaces or funky
-characters in strings.
+get stripped when transmitted in emails. If you put spaces in a string, they
+will gracefully be escaped in the URL.
 
 Author: Martin Drapeau
 Copyright 2009-2012 Planbox Inc.
