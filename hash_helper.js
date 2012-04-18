@@ -14,6 +14,7 @@ Hash = {
 	set: function(attributes) {
 		var object = this._getHashAsObject();
 		for (attr in attributes) object[attr] = attributes[attr];
+		object = _escape(object);
 		var json_string = JSON.stringify(object).replace(/"/g,'');
 		if (this.encode) json_string = this.encode(json_string);
 		document.location.hash = json_string;
@@ -52,13 +53,13 @@ Hash = {
 		var hash = document.location.hash.replace('#','');
 		hash = unescape(hash);
 		// Introduce double quotes on non-numeric strings
-		hash = hash.replace(/(['"])?([a-zA-Z0-9_\-]+)(['"])?:/g, '"$2":');
-		hash = hash.replace(/(['"])?([a-zA-Z0-9_\-%]*[a-zA-Z_\-]+[a-zA-Z0-9_\-%]*)(['"])?/g, '"$2"');
+		hash = hash.replace(/(['"])?([a-zA-Z0-9_\-\s]+)(['"])?:/g, '"$2":');
+		hash = hash.replace(/(['"])?([a-zA-Z0-9_\-\s]*[a-zA-Z_\-]+[a-zA-Z0-9_\-\s]*)(['"])?/g, '"$2"');
 		hash = hash.replace(/,,/g, ',"",').replace(/\[,/g, '["",').replace(/,\]/g, ',""]');
 		if (this.decode) hash = this.decode(hash);
 		var object = {};
 		try {object = JSON.parse(hash);} catch(err) {};
-		return _unescape(object);
+		return object;
 	},
 	
 	// Returns the URL without the hash
