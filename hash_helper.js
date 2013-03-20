@@ -52,6 +52,8 @@ Hash = {
 	_getHashAsObject: function() {
 		var hash = document.location.hash.replace('#','');
 		hash = unescape(hash);
+		// Unescape potentially escaped square brackets
+		hash = hash.replace(/\%5B/g, '[').replace(/%5D/g, ']');
 		// Introduce double quotes on non-numeric strings
 		hash = hash.replace(/(['"])?([a-zA-Z0-9_\-\s]+)(['"])?:/g, '"$2":');
 		hash = hash.replace(/(['"])?([a-zA-Z0-9_\-\s]*[a-zA-Z_\-]+[a-zA-Z0-9_\-\s]*)(['"])?/g, '"$2"');
